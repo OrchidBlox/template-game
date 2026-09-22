@@ -111,6 +111,7 @@ template-game/
 ├── aftman.toml
 ├── default.project.json
 ├── .gitignore
+├── .mcp.json
 ├── selene.toml
 └── README.md
 ```
@@ -191,25 +192,11 @@ Once connected, the project files should appear in the Roblox Studio Explorer.
 
 ### 8. Configure Roblox Studio MCP
 
-Roblox Studio MCP must be configured locally for the Claude Code VS Code extension.
+The `Roblox_Studio` MCP server is already defined in [`.mcp.json`](.mcp.json) at the repo root, so it's set up automatically when you open this project in Claude Code — no manual configuration needed.
 
-Use Roblox Studio's Quick Connect instructions to configure the MCP server.
+The first time it loads, Claude Code will prompt you to approve (trust) the project's `.mcp.json` server. Approve it to enable the connection.
 
-The local MCP configuration uses:
-
-```text
-Name:
-Roblox_Studio
-
-Command:
-cmd.exe
-
-Arguments:
-/c
-cd /d %LOCALAPPDATA%\Roblox && .\mcp.bat
-```
-
-After configuring the MCP, restart VS Code or the Claude Code extension if necessary.
+Restart VS Code or the Claude Code extension after cloning if the MCP tools aren't showing up.
 
 Roblox Studio should be open and running when using the MCP connection.
 
