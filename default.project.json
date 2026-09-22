@@ -1,24 +1,19 @@
 {
   "name": "template-game",
-  "version": "0.1.0",
-  "description": "A template for Roblox game development using Luau and Rojo.",
-  "type": "roblox",
-  "rojo": {
-    "version": "7.0.0",
-    "files": {
-      "src": {
-        "client": {
-          "init.client.luau": "src/client/init.client.luau",
-          "server": {
-            "init.server.luau": "src/server/init.server.luau",
-            "ServerScriptService": {
-              "HelloScript.legacy.luau": "src/server/ServerScriptService/HelloScript.legacy.luau",
-              "HowAreYou.luau": "src/server/ServerScriptService/HowAreYou.luau",
-              "GameManager.luau": "src/server/ServerScriptService/GameManager.luau"
-            }
-          },
-          "shared": "src/shared"
-        }
+  "tree": {
+    "$className": "DataModel",
+
+    "ReplicatedStorage": {
+      "$path": "src/shared"
+    },
+
+    "ServerScriptService": {
+      "$path": "src/server"
+    },
+
+    "StarterPlayer": {
+      "StarterPlayerScripts": {
+        "$path": "src/client"
       }
     }
   }
