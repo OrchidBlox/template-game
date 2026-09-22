@@ -1,0 +1,7 @@
+# Tool version management for the template-game project
+[tool]
+name = "aftman"
+version = "1.0.0"
+
+[dependencies]
+luau = "0.1.0"

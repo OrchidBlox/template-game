@@ -1,0 +1,3 @@
+-- GameManager module for core game management functionality
+-- This file is intended to handle game state, player management, and other essential game mechanics.
+-- Specific functionality is to be determined (TBD).

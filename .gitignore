@@ -1,0 +1,19 @@
+# Roblox / Rojo
+*.rbxl
+*.rbxlx
+*.rbxlx.lock
+*.rbxm
+*.rbxmx
+*.rbxmx.lock
+
+# Local tooling
+*.log
+.DS_Store
+Thumbs.db
+
+# VS Code
+.vscode/
+
+# Rojo generated artifacts
+/*.rbxlx
+/*.rbxl
