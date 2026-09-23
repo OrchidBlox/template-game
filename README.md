@@ -177,7 +177,7 @@ Restart Roblox Studio after the plugin is installed.
 From the project folder, run:
 
 ```powershell
-rojo serve
+rojo serve --port 34567
 ```
 
 Keep this terminal window running while developing.
