@@ -81,24 +81,24 @@ These rules apply to every asset. Roblox and the game code depend on them.
 - Glowing parts use emission in the same colour as the base, strength 2–3.
 
 **Naming**
-- Meshes are named `<Fighter>_<Form>` (for example `Frog_Evolved`).
-- Forms or evolutions of one model share one armature: same bone names, same hierarchy, same rest pose.
+- Meshes are named `<Model>_<Variant>` (for example `Knight_Base`, `Knight_Armored`).
+- Variants of one model share one armature: same bone names, same hierarchy, same rest pose.
 - Action names match the names the game code uses exactly (for example `Idle`, `Attack`, `Hit`).
 
 **Rigging and animation**
-- Keep the bone count small and fixed per fighter family. Rigid parts (eyes, head pieces) get weight 1.0 on their bone.
+- Keep the bone count small and fixed per model family. Rigid parts (eyes, head pieces) get weight 1.0 on their bone.
 - 30 fps. Looping actions start and end on the same pose.
 - Only `Root` moves. Every other bone only rotates or scales.
 
 **Scripts and safety**
 - Every script can be run again: first delete the objects it made earlier, by name.
 - Work in small steps and check each step visually before the next.
-- Save the `.blend` often. Never overwrite exports from another fighter.
+- Save the `.blend` often. Never overwrite exports from another model.
 
 **Export (FBX)**
 - Selected Objects only (the mesh plus its armature). Apply Scalings: FBX All. Forward: −Y. Up: Z. Apply Unit on.
 - Add Leaf Bones off. Bake Animation on with All Actions on. NLA Strips off. Key All Bones on.
-- File names: `<Fighter>_<Form>.fbx`, plus one `<Fighter>_<Action>.fbx` per animation if Roblox needs them separately.
+- File names: `<Model>_<Variant>.fbx`, plus one `<Model>_<Action>.fbx` per animation if Roblox needs them separately.
 
 ## 5. After Codex finishes
 

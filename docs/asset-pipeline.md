@@ -1,6 +1,14 @@
 # Asset pipeline: Blender to Roblox without manual imports
 
-Blender models and their animations go into the game with a few commands, not by hand in Studio. This is the concept and the lessons from the first game that used it (Grow & Battle). Adapt the details to each game, and build the pipeline once the first model is ready. It's not needed on day one.
+Blender models and their animations go into the game with a few commands, not by hand in Studio. It works for any rigged model: characters, NPCs, creatures, vehicles, or props with moving parts. Static props only need the upload step. Set it up once the first model is ready; it's not needed on day one.
+
+## Which path for animations
+
+| You have | Do |
+| --- | --- |
+| Animations already published (IDs from the Toolbox, Marketplace, or another game you own) | Skip the converter. Put the IDs in the game config and check that the rig's bone or Motor6D names match what the animations expect. |
+| A model imported by hand in Studio (Import 3D) with its FBX animations | They are in `ServerStorage.RBX_ANIMSAVES`; publish them from there (see [animations.md](animations.md)). |
+| A Blender model uploaded through Open Cloud | Use `export_animations.py` below. Open Cloud imports don't keep animations. |
 
 ```
 Blender (.blend)
@@ -27,15 +35,15 @@ Blender (.blend)
 
 ## Per model
 
-1. `python scripts/upload_assets.py <Model> --only "*.fbx"`. Uploads the forms.
+1. `python scripts/upload_assets.py <Model> --only "*.fbx"`. Uploads the model and any variants (for example skins or upgraded forms).
 2. Claude inserts each asset through the Studio MCP (`insert_asset`), removes the PackageLink, and checks it **from the side, with a marker at −Z**:
    - Open Cloud imports have come in lying on their side. The fix: set the MeshPart's rotation to identity, rotate the **Root bone +90° on X**, and move the part so Root sits at the model pivot. A skinned mesh follows its bones and Studio doesn't redraw it after the part alone moves, so judge by a fresh clone.
-   - **Rename the MeshPart to the Blender armature name** (for example `FoxRig`) in every form. Animations match their top-level Pose to the MeshPart name. With the wrong name, child bones still move but Root movement (hops, jumps) is silently dropped.
+   - **Rename the MeshPart to the Blender armature name** (for example `CharacterRig`) in every variant. Animations match their top-level Pose to the MeshPart name. With the wrong name, child bones still move but the root bone's movement (anything that lifts or shifts the whole model) is silently dropped.
    - Place it where the code expects (for example `ReplicatedStorage.Assets.<Kind>.<Model>.<Form>`) and set a `SourceAssetId` attribute.
 3. Claude dumps the rig's rest data into `roblox_rest.json` (the snippet below).
 4. `blender -b blender/<Model>.blend --python scripts/export_animations.py -- --rig <Armature> --model <Model>`. The script fits the Blender-to-Roblox mapping from the bone positions and stops if they don't match, so it works for any import orientation.
 5. `python scripts/upload_assets.py <Model> --only "*.rbxmx"`, then put the IDs in the game config.
-6. Playtest: the tracks load, bones move, and Root lifts in a hop.
+6. Playtest: the tracks load, the bones move, and any root motion (a jump, a bob) moves the whole model.
 
 Rest-data dump (run through the Studio MCP in Edit mode; paste the result into `roblox_rest.json` under the model's key):
 

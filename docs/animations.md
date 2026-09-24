@@ -6,7 +6,7 @@ The published animation IDs the game uses.
 
 ## Automated pipeline (preferred)
 
-Convert the Blender actions and upload them with `scripts/export_animations.py` and `scripts/upload_assets.py`. See [asset-pipeline.md](asset-pipeline.md). **Name each form's MeshPart after the Blender armature**, or Root movement won't play.
+Convert the Blender actions and upload them with `scripts/export_animations.py` and `scripts/upload_assets.py`. See [asset-pipeline.md](asset-pipeline.md). **Name each variant's MeshPart after the Blender armature**, or Root movement won't play.
 
 ## How to publish by hand (fallback)
 
@@ -14,7 +14,7 @@ Convert the Blender actions and upload them with `scripts/export_animations.py` 
 2. Right-click an action → **Save to Roblox…** → name it `<Model>_<Action>` → choose the owner (group or account).
 3. Paste the ID below and tell Claude.
 
-Forms that share one skeleton share one set of animations, so publish only the base form's.
+Variants that share one skeleton share one set of animations, so publish only one variant's.
 
 ## <Model name>
 
