@@ -103,7 +103,7 @@ These rules apply to every asset. Roblox and the game code depend on them.
 ## 5. After Codex finishes
 
 1. Claude reviews the report and the exports: triangle counts, names, facing, and scale.
-2. You import them into Studio (Import 3D) and put the models in `ReplicatedStorage.Assets.Fighters.<Fighter>`, named after each form.
-3. You publish the animations and give Claude the animation IDs. Claude connects them in the game.
+2. Claude uploads them with `scripts/upload_assets.py`, inserts them through the Studio MCP, checks the orientation, and places them where the code expects (for example `ReplicatedStorage.Assets.<Kind>.<Model>.<Form>`). Manual Import 3D still works as a fallback.
+3. Claude converts and uploads the animations with `scripts/export_animations.py`, then connects the IDs in the game. See `docs/asset-pipeline.md`.
 
 Keep a list of every asset the game expects, and the names it needs, in the repo docs.

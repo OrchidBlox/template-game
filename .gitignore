@@ -17,3 +17,7 @@ Thumbs.db
 # Rojo generated artifacts
 /*.rbxlx
 /*.rbxl
+
+# Secrets and Blender backups
+.env
+*.blend1

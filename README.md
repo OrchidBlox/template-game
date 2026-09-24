@@ -121,6 +121,7 @@ template-game/
 │   ├── game-design.md        # the design from ChatGPT
 │   ├── codex-workflow.md     # how Claude runs Codex, spec templates, review checklist
 │   ├── asset-checklist.md    # every asset and the anchors code needs
+│   ├── asset-pipeline.md     # Blender -> Open Cloud uploads and animations
 │   ├── animations.md         # published animation IDs
 │   └── new-computer-setup.md # setting up a new computer
 ├── blender/
