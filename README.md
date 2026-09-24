@@ -12,6 +12,8 @@ When you start a real game project, you should change the values that are projec
 
 This template is meant to be a clean base, not a finished game.
 
+**Setting up a new computer?** Follow [docs/new-computer-setup.md](docs/new-computer-setup.md): installs, sign-ins, MCP setup, and the files to copy from the old computer.
+
 ## What to change when starting a new game
 
 Before using this repo for a real project, update these items:
@@ -65,7 +67,7 @@ This script updates the project metadata to match the new name automatically.
 
 ## VS Code Extensions
 
-* [ ] Luau Language Server
+* [ ] Roblox LSP (NightrainsRbx)
 
   * Provides Luau syntax highlighting, autocomplete, errors, and other development features.
 
@@ -119,7 +121,8 @@ template-game/
 │   ├── game-design.md        # the design from ChatGPT
 │   ├── codex-workflow.md     # how Claude runs Codex, spec templates, review checklist
 │   ├── asset-checklist.md    # every asset and the anchors code needs
-│   └── animations.md         # published animation IDs
+│   ├── animations.md         # published animation IDs
+│   └── new-computer-setup.md # setting up a new computer
 ├── blender/
 │   └── README.md             # Blender + Codex model workflow and build rules
 ├── scripts/
