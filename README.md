@@ -90,6 +90,20 @@ This script updates the project metadata to match the new name automatically.
   * Must be configured locally for the Claude Code VS Code extension.
   * Roblox Studio should be open when using the MCP connection.
 
+## AI Tools (optional, for the AI workflow)
+
+* [ ] ChatGPT VS Code extension (includes Codex)
+
+  * Codex writes big code changes and builds Blender models. See [docs/codex-workflow.md](docs/codex-workflow.md).
+
+* [ ] Blender 4.x or later, with the Blender MCP addon
+
+  * Codex builds 3D models here. Setup: [blender/README.md](blender/README.md).
+
+* [ ] uv (for `uvx`)
+
+  * Runs the Blender MCP server (`mcp-for-blender`). Install it so `%USERPROFILE%\.local\bin\uvx.exe` exists.
+
 ## Project Structure
 
 ```text
@@ -97,24 +111,52 @@ template-game/
 ├── src/
 │   ├── client/
 │   │   └── init.client.luau
-│   ├── server/
-│   │   ├── init.server.luau
-│   │   └── ServerScriptService/
-│   │       ├── GameManager.luau
-│   │       ├── HelloScript.legacy.luau
-│   │       └── HowAreYou.luau
-│   └── shared/
-│       └── Hello.luau
+│   └── server/
+│       ├── init.server.luau
+│       └── ServerScriptService/
+│           └── GameManager.luau
+├── docs/
+│   ├── game-design.md        # the design from ChatGPT
+│   ├── codex-workflow.md     # how Claude runs Codex, spec templates, review checklist
+│   ├── asset-checklist.md    # every asset and the anchors code needs
+│   └── animations.md         # published animation IDs
+├── blender/
+│   └── README.md             # Blender + Codex model workflow and build rules
 ├── scripts/
 │   └── rename-template.ps1
-├── assets/
+├── .claude/settings.json     # Claude Code permissions for read-only MCP tools
+├── .mcp.json                 # Roblox Studio and Blender MCP servers
 ├── aftman.toml
 ├── default.project.json
-├── .gitignore
-├── .mcp.json
 ├── selene.toml
+├── CLAUDE.md                 # AI roles, phases, and conventions
 └── README.md
 ```
+
+## AI Workflow
+
+This template is set up for a team of AIs, each with a different job. The full rules are in [CLAUDE.md](CLAUDE.md).
+
+| Who | Job |
+| --- | --- |
+| **You** | Creative director: decide what gets built, playtest, approve. |
+| **ChatGPT** | Designs the game: mechanics, progression, balance, names. Paste its design into [docs/game-design.md](docs/game-design.md). |
+| **Codex** | Writes big code changes from Claude's specs, and builds 3D models in Blender through the Blender MCP. |
+| **Claude Code** | Plans the architecture, writes specs, reviews and fixes Codex's work, makes small fixes directly, and tests in Studio through the Studio MCP. |
+| **Roblox Studio AI** | Builds the map and scenery, and makes quick edits in Studio. |
+
+Flow: design (ChatGPT) → plan (Claude) → build (Codex or Claude) → review and test (Claude) → playtest (you) → feedback → repeat.
+
+Track the project as **NOW / NEXT / FUTURE** in CLAUDE.md. Only NOW gets built.
+
+## Starting a New Game
+
+1. Create the new repo from this template and run `./scripts/rename-template.ps1 -ProjectName "YourGame"`.
+2. Fill in the NOW / NEXT / FUTURE section of [CLAUDE.md](CLAUDE.md) and paste the design into [docs/game-design.md](docs/game-design.md).
+3. Decide who owns the experience (your account or a group) **before** publishing animations or products. Animations must be published under the same owner as the game.
+4. Publish the place, then turn on **Game Settings → Security → Enable Studio Access to API Services**, so DataStores work in Studio.
+5. Before outside playtests, publish a separate **Dev experience** so testers never touch the real game's save data.
+6. Set `Workspace.StreamingEnabled` on purpose. If it's on, tell Codex in every spec so client code looks up map objects lazily.
 
 ## Project Setup
 
@@ -177,10 +219,10 @@ Restart Roblox Studio after the plugin is installed.
 From the project folder, run:
 
 ```powershell
-rojo serve --port 34567
+rojo serve
 ```
 
-Keep this terminal window running while developing.
+Rojo uses its default port, 34872. Keep this terminal window running while developing.
 
 Rojo must remain connected for changes made to Rojo-managed source files to sync into Roblox Studio.
 
@@ -199,6 +241,8 @@ The first time it loads, Claude Code will prompt you to approve (trust) the proj
 Restart VS Code or the Claude Code extension after cloning if the MCP tools aren't showing up.
 
 Roblox Studio should be open and running when using the MCP connection.
+
+The same file also defines a `blender` MCP server, so Claude can inspect Blender when it is open with the MCP addon connected. It needs uv installed (see AI Tools above).
 
 ### 9. Test the Connection
 
@@ -302,9 +346,8 @@ This template is intentionally minimal and should be treated as a starting point
 
 You will usually replace or remove:
 
-* the basic `Hello` example files
 * the placeholder `GameManager` script
-* the test prints
+* the test prints in `init.client.luau` and `init.server.luau`
 * the generic `template-game` naming
 
 That is expected. The point of the template is to give you a working Roblox + Rojo structure, then let you build the actual game on top of it.

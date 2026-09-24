@@ -4,6 +4,8 @@
 -- Example of initializing a basic server environment
 local Players = game:GetService("Players")
 
+print("template-game server started!")
+
 -- Function to handle player joining
 local function onPlayerAdded(player)
     print(player.Name .. " has joined the game.")

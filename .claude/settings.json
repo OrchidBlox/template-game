@@ -5,7 +5,14 @@
       "mcp__Roblox_Studio__search_game_tree",
       "mcp__Roblox_Studio__list_roblox_studios",
       "mcp__Roblox_Studio__multi_edit",
-      "mcp__Roblox_Studio__inspect_instance"
+      "mcp__Roblox_Studio__inspect_instance",
+      "mcp__Roblox_Studio__get_console_output",
+      "mcp__Roblox_Studio__script_read",
+      "mcp__Roblox_Studio__script_search",
+      "mcp__Roblox_Studio__script_grep",
+      "mcp__Roblox_Studio__screen_capture",
+      "mcp__blender__get_scene_info",
+      "mcp__blender__get_addon_status"
     ]
   }
 }

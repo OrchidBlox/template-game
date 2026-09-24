@@ -1,1 +1,1 @@
--- This file is intentionally left blank.
+print("template-game client started!")

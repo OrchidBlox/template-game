@@ -8,6 +8,12 @@
         "cd /d %LOCALAPPDATA%\\Roblox && .\\mcp.bat"
       ],
       "env": {}
+    },
+    "blender": {
+      "type": "stdio",
+      "command": "${USERPROFILE}\\.local\\bin\\uvx.exe",
+      "args": ["--python", "3.11", "mcp-for-blender"],
+      "env": {}
     }
   }
 }
