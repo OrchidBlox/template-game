@@ -20,11 +20,16 @@ There is no build step or automated test suite. Verifying behavior means: run `r
 
 `default.project.json` is the Rojo sync map and is the source of truth for how `src/` becomes the Roblox DataModel:
 
-- `src/client` → `StarterPlayer.StarterPlayerScripts`
-- `src/server` → `ServerScriptService`
-- `src/shared` → `ReplicatedStorage`
+- `src/client` → `StarterPlayer.StarterPlayerScripts.Client`
+- `src/server` → `ServerScriptService.Server`
+- `src/shared` → `ReplicatedStorage.Shared`
 
-Within each mapped folder, `init.client.luau` / `init.server.luau` at the folder root becomes the script for that Roblox instance itself (Rojo convention); any subfolder becomes a nested child Instance under it. For example, `src/server/ServerScriptService/GameManager.luau` syncs into `ServerScriptService.ServerScriptService.GameManager`.
+Each maps to a child folder, not the service itself, so Rojo never removes things built in Studio (for example `ReplicatedStorage.Assets`). `init.server.luau` / `init.client.luau` become the `Server` / `Client` scripts; their subfolders become children.
+
+- **Server:** `init.server.luau` requires each module in `Services/` in `SERVICE_ORDER`, calls every `Init()` (setup only, no calls into other services), then every `Start()` (connect events, begin work). One service per system.
+- **Client:** `init.client.luau` starts each module in `Controllers/` in `CONTROLLER_ORDER`. Controllers display state and send requests only.
+- **Remotes:** `src/shared/Remotes.luau` names every RemoteEvent and documents its payload. The server creates them; clients wait for them.
+- **Saving:** there is no DataService yet on purpose. When a game needs saving, port the tested one from Grow & Battle (`src/server/Services/DataService.luau` in grow-a-seed-fighter: session locking, data repair, versioned migrations, save on leave and shutdown) in that game's first milestone, and playtest it there, rather than writing saving code from scratch.
 
 Claude Code can inspect and interact with a running Roblox Studio session through the `Roblox_Studio` MCP server defined in `.mcp.json` (checked into the repo, so it works for any clone). This requires Roblox Studio to be open; on first load Claude Code will prompt to trust the project's `.mcp.json`. The `blender` MCP server in the same file lets Claude inspect Blender when it is open with the MCP addon connected.
 
@@ -44,7 +49,7 @@ Each AI answers a different question. The human owner makes every final decision
 
 - **Big code change** → Claude writes a spec → Codex implements → Claude reviews the diff, fixes problems, runs `rojo build`, and playtests through the Studio MCP.
 - **Small fix** → Claude makes it directly. A spec and review round trip costs about as much as the fix.
-- **3D model or animation** → Claude writes a Blender brief → Codex builds it in Blender → Claude checks the report and exports → the owner imports into Studio → Claude places it, fixes pivots, and wires it into code.
+- **3D model or animation** → Claude writes a Blender brief → Codex builds it in Blender → Claude checks the report and exports → Claude uploads through Open Cloud, places the model, converts and uploads its animations, and wires them into code ([docs/asset-pipeline.md](docs/asset-pipeline.md)). A manual Import 3D by the owner is the fallback.
 - **Map and scenery** → the owner uses Roblox Studio AI. Claude only documents the named anchors code depends on and may make small placeholder tweaks when a feature needs them.
 - Pick the Codex model per run with `-m` (use the cheaper default unless the owner asks for a stronger one). How to run Codex: [docs/codex-workflow.md](docs/codex-workflow.md).
 

@@ -1,17 +1,32 @@
--- This file serves as the entry point for the server-side code.
--- It initializes the server environment and may include setup for game services or other server-related configurations.
+-- Server entry point.
+-- Loads each service in SERVICE_ORDER, runs every Init (setup only, no calls
+-- into other services), then every Start (connect events, begin work).
+-- Add a service here only when the current phase needs it. Order matters when
+-- one service's Start relies on another being ready.
 
--- Example of initializing a basic server environment
-local Players = game:GetService("Players")
+local Services = script:WaitForChild("Services")
 
-print("template-game server started!")
+local SERVICE_ORDER = {
+	"PlayerService",
+}
 
--- Function to handle player joining
-local function onPlayerAdded(player)
-    print(player.Name .. " has joined the game.")
+local loaded = {}
+for _, name in SERVICE_ORDER do
+	loaded[name] = require(Services:WaitForChild(name))
 end
 
--- Connect the player added event
-Players.PlayerAdded:Connect(onPlayerAdded)
+for _, name in SERVICE_ORDER do
+	local service = loaded[name]
+	if service.Init then
+		service.Init()
+	end
+end
 
--- Additional server setup can be added here as needed.
+for _, name in SERVICE_ORDER do
+	local service = loaded[name]
+	if service.Start then
+		service.Start()
+	end
+end
+
+print("[Server] template-game server started")

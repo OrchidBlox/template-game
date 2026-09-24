@@ -111,12 +111,14 @@ This script updates the project metadata to match the new name automatically.
 ```text
 template-game/
 ├── src/
-│   ├── client/
-│   │   └── init.client.luau
-│   └── server/
-│       ├── init.server.luau
-│       └── ServerScriptService/
-│           └── GameManager.luau
+│   ├── client/               # -> StarterPlayerScripts.Client
+│   │   ├── init.client.luau  # starts each controller in order
+│   │   └── Controllers/      # one controller per UI/system (NotificationController example)
+│   ├── server/               # -> ServerScriptService.Server
+│   │   ├── init.server.luau  # loads services, runs Init then Start
+│   │   └── Services/         # one service per system (PlayerService example)
+│   └── shared/               # -> ReplicatedStorage.Shared
+│       └── Remotes.luau      # every RemoteEvent, created by the server
 ├── docs/
 │   ├── game-design.md        # the design from ChatGPT
 │   ├── codex-workflow.md     # how Claude runs Codex, spec templates, review checklist
@@ -252,17 +254,7 @@ The same file also defines a `blender` MCP server, so Claude can inspect Blender
 
 The template includes basic test scripts so you can verify the VS Code → Rojo → Roblox Studio flow.
 
-Client:
-
-```lua
-print("template-game client started!")
-```
-
-Server:
-
-```lua
-print("template-game server started!")
-```
+The server and client entry points print a line when they start, and the example `PlayerService` sends a welcome message that `NotificationController` shows as a notification.
 
 Start Rojo:
 
@@ -277,11 +269,11 @@ Check the Output window.
 You should see:
 
 ```text
-template-game client started!
-template-game server started!
+[Server] template-game server started
+[Client] template-game client started
 ```
 
-If both messages appear, the VS Code → Rojo → Roblox Studio workflow is working correctly.
+and a "Welcome" notification in the corner of the game view. If both messages appear, the VS Code → Rojo → Roblox Studio workflow is working correctly.
 
 ## Rojo Script Sync
 
@@ -350,8 +342,8 @@ This template is intentionally minimal and should be treated as a starting point
 
 You will usually replace or remove:
 
-* the placeholder `GameManager` script
-* the test prints in `init.client.luau` and `init.server.luau`
+* the example `PlayerService` and `NotificationController` (keep the loader pattern in `init.server.luau` and `init.client.luau`)
+* the `Notify` remote, if the game doesn't need it
 * the generic `template-game` naming
 
 That is expected. The point of the template is to give you a working Roblox + Rojo structure, then let you build the actual game on top of it.
