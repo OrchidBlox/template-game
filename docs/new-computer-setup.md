@@ -53,17 +53,19 @@ Install these from the Extensions panel:
 
 ### Roblox Studio MCP
 
-The project's `.mcp.json` runs `%LOCALAPPDATA%\Roblox\mcp.bat`, which starts `StudioMCP.exe` from Roblox Studio's install folder. Roblox Studio creates `mcp.bat` when you turn on its MCP server in Studio's Assistant or MCP settings. Studio's menus change often, so if you can't find the setting, search the Roblox Creator Docs for "Studio MCP".
+This one comes with Roblox Studio; there is nothing to download. `StudioMCP.exe` is part of Studio's install, and Studio creates `%LOCALAPPDATA%\Roblox\mcp.bat` when you turn on its MCP server in Studio's settings. The project's `.mcp.json` and Codex's config both run that `mcp.bat`. Studio's menus change often, so if you can't find the setting, search the Roblox Creator Docs for "Studio MCP".
 
 Check: `%LOCALAPPDATA%\Roblox\mcp.bat` exists.
 
 ### Blender MCP
 
-1. Download the addon from https://github.com/ahujasid/mcp-for-blender (`addon.py`).
-2. In Blender: **Edit → Preferences → Add-ons → Install from Disk**, pick `addon.py`, and enable it.
-3. In the 3D Viewport, press **N**, open the **MCP** tab, and click **Connect**.
+The Blender MCP has two halves:
 
-The MCP server itself (`mcp-for-blender`) is downloaded automatically by `uvx` the first time a tool starts it.
+- **The server** is the PyPI package [`mcp-for-blender`](https://pypi.org/project/mcp-for-blender/). You don't install it by hand: `uvx` downloads it from PyPI the first time Claude or Codex starts it.
+- **The Blender addon** runs inside Blender and receives the commands. Install it once:
+  1. Download the project from its GitHub page (linked from the PyPI page). You need `addon.py`.
+  2. In Blender: **Edit → Preferences → Add-ons → Install from Disk**, pick `addon.py`, and enable it.
+  3. In the 3D Viewport, press **N**, open the **MCP** tab, and click **Connect**.
 
 ### Codex config
 
