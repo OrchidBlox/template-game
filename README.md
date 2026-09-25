@@ -149,9 +149,11 @@ This template is set up for a team of AIs, each with a different job. The full r
 | **ChatGPT** | Designs the game: mechanics, progression, balance, names. Paste its design into [docs/game-design.md](docs/game-design.md). |
 | **Codex** | Writes big code changes from Claude's specs, and builds 3D models in Blender through the Blender MCP. |
 | **Claude Code** | Plans the architecture, writes specs, reviews and fixes Codex's work, makes small fixes directly, and tests in Studio through the Studio MCP. |
-| **Roblox Studio AI** | Builds the map and scenery, and makes quick edits in Studio. |
+| **Roblox AI generators** | Generate map props (buildings, trees, lanterns, fence sections) from short prompts; Claude or Codex place them with a script. See [docs/ai-map-building-workflow.md](docs/ai-map-building-workflow.md). The Studio Assistant still handles quick manual edits. |
 
 Flow: design (ChatGPT) → plan (Claude) → build (Codex or Claude) → review and test (Claude) → playtest (you) → feedback → repeat.
+
+**Maps:** generate props with Roblox's AI (the Studio MCP tool `generate_procedural_model`, several at once), keep them in `ServerStorage.AIProps`, and have Claude or Codex place them with one short script per area. Screenshot, review and playtest each area, and save the place after each one. Full steps and safety rules: [docs/ai-map-building-workflow.md](docs/ai-map-building-workflow.md).
 
 Track the project as **NOW / NEXT / FUTURE** in CLAUDE.md. Only NOW gets built.
 

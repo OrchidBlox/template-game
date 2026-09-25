@@ -43,14 +43,14 @@ Each AI answers a different question. The human owner makes every final decision
 | **ChatGPT (chat)** | "What should we build and why?" | Game design, mechanics, progression, balance tables, content names, player-experience questions, marketing ideas. Produces designs, not code. |
 | **Codex (ChatGPT Codex CLI)** | "Build this spec." | Writes **big code changes** (new systems, multi-file milestones) from a spec Claude writes. Builds **3D models, rigs, and animations in Blender** through the Blender MCP. Never decides design or architecture. |
 | **Claude (Claude Code)** | "How should we technically build it?" | Architecture and technical plans, specs for Codex, **reviewing and fixing** Codex's work, **small code fixes directly** (a few lines up to a couple of files), debugging, Studio setup and testing through the Roblox Studio MCP, docs, and git. |
-| **Roblox Studio AI** | "How can we quickly change this in Studio?" | Environment and map building (terrain, scenery, layout), quick property edits, simple objects. |
+| **Roblox AI generators / Studio AI** | "How can we quickly make this in Studio?" | Generating map props from short prompts (Claude or Codex call the generator through the Studio MCP and place the props with a script), quick property edits, simple objects. |
 
 ### Claude and Codex split
 
 - **Big code change** → Claude writes a spec → Codex implements → Claude reviews the diff, fixes problems, runs `rojo build`, and playtests through the Studio MCP.
 - **Small fix** → Claude makes it directly. A spec and review round trip costs about as much as the fix.
 - **3D model or animation** → Claude writes a Blender brief → Codex builds it in Blender → Claude checks the report and exports → Claude uploads through Open Cloud, places the model, converts and uploads its animations, and wires them into code ([docs/asset-pipeline.md](docs/asset-pipeline.md)). A manual Import 3D by the owner is the fallback.
-- **Map and scenery** → the owner uses Roblox Studio AI. Claude only documents the named anchors code depends on and may make small placeholder tweaks when a feature needs them.
+- **Map and scenery** → Roblox's AI generators make the props and Claude or Codex place them with one script per area, following [docs/ai-map-building-workflow.md](docs/ai-map-building-workflow.md). Never move or delete the named anchors code depends on; the owner reviews each area.
 - Pick the Codex model per run with `-m` (use the cheaper default unless the owner asks for a stronger one). How to run Codex: [docs/codex-workflow.md](docs/codex-workflow.md).
 
 ### Handoff process
