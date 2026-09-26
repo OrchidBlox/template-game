@@ -200,7 +200,7 @@ From the project folder, run:
 aftman install
 ```
 
-This installs the tools listed in `aftman.toml`.
+This installs the tools listed in `aftman.toml`: Rojo and Selene (the Luau linter), at the pinned versions.
 
 ### 4. Verify Rojo
 
@@ -210,7 +210,7 @@ Run:
 rojo --version
 ```
 
-Make sure Rojo is installed and working.
+Make sure Rojo is installed and working. Check Selene the same way with `selene --version`.
 
 ### 5. Install the Rojo Studio Plugin
 
@@ -317,6 +317,20 @@ When creating a real project from this template, run:
 This updates the project metadata to match the new project name automatically.
 
 If you do not pass a project name, the script will try to infer it from the Git remote or the current folder name.
+
+## Linting (Selene)
+
+Selene checks all Luau code for mistakes such as unused variables, shadowed names and wrong Roblox API use. The rules come from `selene.toml` (`std = "roblox"`), and the version is pinned in `aftman.toml`, so Claude, Codex and you all lint the same way.
+
+Run it from the project folder:
+
+```powershell
+selene src
+```
+
+Aim for **0 errors and 0 warnings** before every commit. The **Selene** VS Code extension shows the same warnings in the editor as you type.
+
+For the AI workflow, Claude and Codex run `selene src` together with `rojo build -o build.rbxlx` after every change, and fix anything it reports before committing. Codex specs should include "Selene clean" in their done-when checklist.
 
 ## Git Workflow
 
