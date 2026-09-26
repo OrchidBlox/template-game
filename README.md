@@ -345,6 +345,14 @@ Aim for **0 errors and 0 warnings** before every commit. The **Selene** VS Code 
 
 For the AI workflow, Claude and Codex run `selene src` together with `rojo build -o build.rbxlx` after every change, and fix anything it reports before committing. Codex specs should include "Selene clean" in their done-when checklist.
 
+## AI Workflow Helpers
+
+- **Lint after every edit (hook):** `.claude/hooks/lint-luau.py` runs Selene on each Luau file Claude edits and hands any warnings straight back to Claude to fix. Needs Python and Selene (`aftman install`).
+- **Commit reminder (hook):** `.claude/hooks/commit-reminder.py` shows a reminder when Claude finishes with uncommitted files. It never blocks.
+- **Playtest feedback to issues:** write your playtest notes as a list in a file, then run `python scripts/feedback-to-issues.py notes.md` (add `--dry-run` to preview). Each item becomes a GitHub issue labelled `playtest`. Needs `gh auth login`.
+- **Screenshot pass:** `scripts/ui-screens.luau` opens each game window in turn during Play so Claude can capture a full set of screenshots and compare them with `docs/reference/`. Add pop-ups that aren't a window to its `EXTRA` table.
+- **Place backups:** Roblox keeps every published or saved version of the place (File > Version History), so map edits can be restored there. Add a Git LFS place backup (see grow-a-seed-fighter's `scripts/backup-place.sh`) only if you need copies outside Roblox; GitHub's free LFS space fills quickly with large places.
+
 ## Git Workflow
 
 Use this template like any other Git project.

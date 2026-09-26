@@ -14,5 +14,31 @@
       "mcp__blender__get_scene_info",
       "mcp__blender__get_addon_status"
     ]
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python \"$CLAUDE_PROJECT_DIR/.claude/hooks/lint-luau.py\"",
+            "timeout": 60,
+            "statusMessage": "Linting with Selene"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python \"$CLAUDE_PROJECT_DIR/.claude/hooks/commit-reminder.py\"",
+            "timeout": 20
+          }
+        ]
+      }
+    ]
   }
 }
