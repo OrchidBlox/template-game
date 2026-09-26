@@ -318,6 +318,19 @@ This updates the project metadata to match the new project name automatically.
 
 If you do not pass a project name, the script will try to infer it from the Git remote or the current folder name.
 
+## Saving Player Data (ProfileStore)
+
+Player saves use **ProfileStore** by loleris (`src/server/Packages/ProfileStore.luau`), the community-standard library for Roblox saves. It keeps each save open on only one server at a time (session locking, which prevents item duplication and lost progress), autosaves, and saves when a player leaves or the server shuts down.
+
+Use it through `src/server/Services/DataService.luau`:
+
+- Put every saved field in `TEMPLATE`. New fields reach existing players automatically.
+- Other services call `DataService.GetData(player)` and change the returned table directly. Register `DataService.OnProfileLoaded(callback)` in `Init` to set a player up once their data loads.
+- When a field's format changes, bump `DATA_VERSION` and add a step to `migrate`. Never rename `STORE_NAME` after launch, because everyone would start fresh.
+- To test saving in Studio, turn on **Game Settings > Security > Enable Studio Access to API Services**. Without it, ProfileStore uses a mock store and nothing saves.
+
+Update ProfileStore by copying the latest `ProfileStore.luau` from https://github.com/MadStudioRoblox/ProfileStore. Selene skips `src/server/Packages` (third-party code).
+
 ## Linting (Selene)
 
 Selene checks all Luau code for mistakes such as unused variables, shadowed names and wrong Roblox API use. The rules come from `selene.toml` (`std = "roblox"`), and the version is pinned in `aftman.toml`, so Claude, Codex and you all lint the same way.

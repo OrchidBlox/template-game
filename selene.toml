@@ -1,1 +1,3 @@
 std = "roblox"
+# Third-party packages (e.g. ProfileStore) are linted by their authors, not us.
+exclude = ["src/server/Packages/*"]
