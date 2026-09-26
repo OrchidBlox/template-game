@@ -338,6 +338,10 @@ git push
 
 For new projects, it is common to work on a `development` branch before merging into `main`.
 
+## UI and Icons
+
+Game UI (windows, buttons, HUD icons) is bought from [BuiltByBit](https://builtbybit.com/resources/roblox/graphics-ui/) rather than drawn from scratch. Use BuiltByBit packs for most of each game's design, check the licence allows a commercial Roblox game, and record each pack in `docs/asset-checklist.md`. The AI assistants are told (in `CLAUDE.md`) to remind you of this whenever UI work comes up.
+
 ## Notes for New Games
 
 This template is intentionally minimal and should be treated as a starting point.
