@@ -31,7 +31,7 @@ echo "Model: $model ($reasoning) - log: $log"
 cd "$root"
 "$codex" exec -m "$model" -c model_reasoning_effort="$reasoning" --approve-for-me \
 	"Read $spec and implement it. Follow docs/roblox-ui-gotchas.md. You may use the Roblox Studio MCP to test your changes in Play mode." \
-	>"$log" 2>&1
+	</dev/null >"$log" 2>&1
 status=$?
 tail -40 "$log"
 exit $status
