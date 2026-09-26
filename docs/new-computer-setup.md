@@ -27,7 +27,7 @@ Already safe in the cloud: your GitHub repos, the Roblox places, and published a
 | Aftman | https://github.com/LPGhatguy/aftman/releases → download the Windows zip, run `aftman self-install` | `aftman --version` |
 | uv (for the Blender MCP) | PowerShell: `powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 \| iex"` | `%USERPROFILE%\.local\bin\uvx.exe` exists |
 | Blender (4.x or later) | https://www.blender.org/download | Opens |
-| GitHub CLI (optional) | https://cli.github.com | `gh --version` |
+| GitHub CLI (required for the AI workflow) | PowerShell: `winget install --id GitHub.cli -e` (or https://cli.github.com) | `gh --version`, then `gh auth status` |
 
 If PowerShell can't find `aftman` after installing, add it to your PATH (the README's setup step 2 has the command), then open a new terminal.
 
@@ -44,7 +44,7 @@ Install these from the Extensions panel:
 
 ## 4. Sign in
 
-- [ ] **GitHub:** `gh auth login`, or push once and sign in when Git asks. Set your name and email: `git config --global user.name "Your Name"` and `git config --global user.email "you@example.com"`.
+- [ ] **GitHub:** run `gh auth login` in a new terminal (GitHub.com, HTTPS, login with a web browser). Claude and Codex use `gh` to check repo privacy, open pull requests and read issues, so don't skip it. Set your name and email: `git config --global user.name "Your Name"` and `git config --global user.email "you@example.com"`.
 - [ ] **Roblox Studio:** sign in with the account that has access to your games (and the group, if the game is group-owned).
 - [ ] **Claude Code:** open the Claude panel in VS Code and sign in.
 - [ ] **ChatGPT/Codex:** open the ChatGPT panel in VS Code and sign in.
